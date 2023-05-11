@@ -41,18 +41,10 @@ class Store {
   /**
    * Добавление новой записи
    */
-  addItem() {
-    let isCodeUnique = false;
-    let uniqueCode;
-    while (!isCodeUnique) {
-      // Генерация уникального id
-      uniqueCode = Math.floor(Math.random() * 100);
-      isCodeUnique = this.state.list.every((item) => item.code !== uniqueCode);
-    }
-
+  addItem(code) {
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: uniqueCode, title: 'Новая запись', count: 0 }],
+      list: [...this.state.list, { code: code, title: 'Новая запись', count: 0 }],
     });
   }
 
