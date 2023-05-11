@@ -79,7 +79,9 @@ class Store {
         return item;
       } // Подсчёт количества выделений
       if (item.code === code) {
-        item.count += 1;
+        if (!item.selected) {
+          item.count += 1;
+        }
         item.selected = !item.selected;
       } // Сброс старого выделения
       if (item.selected && item.code !== code) {
