@@ -27,7 +27,7 @@ export function createElement(name, props = {}, ...children) {
   return element;
 }
 
-export function getWordForm(number, word = 'раз') {
+export function getWordForm(number, word = 'раз') { // Функция, которая определяет окончание
   const lastDigit = number % 10;
   const lastTwoDigit = number % 100;
 

@@ -45,13 +45,14 @@ class Store {
     let isCodeUnique = false;
     let uniqueCode;
     while (!isCodeUnique) {
+      // Генерация уникального id
       uniqueCode = Math.floor(Math.random() * 100);
       isCodeUnique = this.state.list.every((item) => item.code !== uniqueCode);
     }
 
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: uniqueCode, title: 'Новая запись' }],
+      list: [...this.state.list, { code: uniqueCode, title: 'Новая запись', count: 0 }],
     });
   }
 
@@ -70,19 +71,25 @@ class Store {
    * Выделение записи по коду
    * @param code
    */
-  selectItem(code) {
+  selectItem(code, event) {
+    const target = event.target;
+    const updatedList = this.state.list.map((item) => {
+      // Сохранение выделения при удалении
+      if (target.tagName === 'BUTTON') {
+        return item;
+      } // Подсчёт количества выделений
+      if (item.code === code) {
+        item.count += 1;
+        item.selected = !item.selected;
+      } // Сброс старого выделения
+      if (item.selected && item.code !== code) {
+        item.selected = !item.selected;
+      }
+      return item;
+    });
     this.setState({
       ...this.state,
-      list: this.state.list.map((item) => {
-        if (item.code === code) {
-          item.count += 1;
-          item.selected = !item.selected;
-        }
-        if (item.selected && item.code !== code) {
-          item.selected = !item.selected;
-        }
-        return item;
-      }),
+      list: updatedList,
     });
   }
 }
