@@ -1,0 +1,35 @@
+.Cart {
+    
+}
+.Cart-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 71px;
+    background: #f5f;
+    height: 80px;
+    padding: 0 20px 0;
+}
+
+.Cart-title h1{
+    margin: 0;
+}
+
+.Cart-total {
+    display: flex;
+    justify-content: right;
+    gap: 53px;
+    padding-top: 20px;
+    padding-right: 120px;
+    font-weight: 700;
+}
+
+.Cart-list {
+    max-height: 250px;
+    overflow: auto;
+    text-align: center;
+}
+
+.Cart-empty {
+    display: inline-block;
+}
