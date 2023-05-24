@@ -1,4 +1,5 @@
 import './style.css';
+import PropTypes from 'prop-types';
 
 const Modal = ({ children, visible, setVisible }) => {
   const rootClasses = ['Modal'];
@@ -13,5 +14,14 @@ const Modal = ({ children, visible, setVisible }) => {
     </div>
   );
 };
-    
+
+Modal.propTypes = {
+    children: PropTypes.node,
+    visible: PropTypes.bool,
+    setVisible: PropTypes.func,
+}
+
+Modal.defaultProps = {
+    setVisible: () => {},
+}
 export default Modal;

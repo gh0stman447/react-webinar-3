@@ -6,7 +6,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 71px;
-    background: #f5f;
+    background: #edecec;
     height: 80px;
     padding: 0 20px 0;
 }
@@ -16,11 +16,12 @@
 }
 
 .Cart-total {
+    
     display: flex;
     justify-content: right;
     gap: 53px;
     padding-top: 20px;
-    padding-right: 120px;
+    padding-right: 110px;
     font-weight: 700;
 }
 

@@ -7,7 +7,14 @@ function Controls({ setVisible, increaseCount, totalAmount }) {
   return (
     <div className='Controls'>
       <div className=''>
-        В корзине: {increaseCount ? `${increaseCount} ${plural(increaseCount, {one: 'товар', few: 'товара', many: 'товаров'})} / ${totalAmount.toLocaleString()} ₽ ` : 'пусто'}
+        В корзине:{' '}
+        {increaseCount
+          ? `${increaseCount} ${plural(increaseCount, {
+              one: 'товар',
+              few: 'товара',
+              many: 'товаров',
+            })} / ${totalAmount.toLocaleString()} ₽ `
+          : 'пусто'}
       </div>
       <button onClick={() => setVisible(true)}>Перейти</button>
     </div>
@@ -15,11 +22,13 @@ function Controls({ setVisible, increaseCount, totalAmount }) {
 }
 
 Controls.propTypes = {
-  onAdd: PropTypes.func,
+  setVisible: PropTypes.func,
+  increaseCount: PropTypes.number,
+  totalAmount: PropTypes.number,
 };
 
 Controls.defaultProps = {
-  onAdd: () => {},
+  setVisible: () => {},
 };
 
 export default React.memo(Controls);

@@ -1,5 +1,6 @@
 import React from 'react';
 import List from '../list';
+import PropTypes from 'prop-types';
 import './style.css';
 
 const Cart = ({ products, setVisible, renderItem, totalAmount }) => {
@@ -32,6 +33,18 @@ const Cart = ({ products, setVisible, renderItem, totalAmount }) => {
       </div>
     </div>
   );
+};
+
+Cart.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setVisible: PropTypes.func,
+  renderItem: PropTypes.func,
+  totalAmount: PropTypes.number,
+};
+
+Cart.defaultProps = {
+  renderItem: () => {},
+  setVisible: () => {},
 };
 
 export default React.memo(Cart);

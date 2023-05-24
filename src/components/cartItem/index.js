@@ -1,4 +1,5 @@
 import './style.css';
+import PropTypes from 'prop-types';
 
 const CartItem = ({ item, deleteItem }) => {
   return (
@@ -14,6 +15,20 @@ const CartItem = ({ item, deleteItem }) => {
       </div>
     </div>
   );
+};
+
+CartItem.propTypes = {
+  item: PropTypes.shape({
+    code: PropTypes.number,
+    title: PropTypes.string,
+    price: PropTypes.number,
+    count: PropTypes.number,
+  }),
+  deleteItem: PropTypes.func,
+};
+
+CartItem.defaultProps = {
+  deleteItem: () => {},
 };
 
 export default CartItem;
