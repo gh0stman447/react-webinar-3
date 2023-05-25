@@ -55,19 +55,31 @@ class Store {
    * @param code
    */
   deleteItem(code) {
+    const updatedCartList = this.state.cartList.filter((item) => item.code !== code);
     this.setState({
       ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.map((item) => (item.code === code ? { ...item, count: 0 } : item)),
+      cartList: updatedCartList,
+      totalAmount: updatedCartList.reduce((acc, item) => acc + (item.count ?? 0) * item.price, 0),
+      countOfUniqueProducts: this.state.countOfUniqueProducts - 1,
     });
   }
 
   increaseCount(code) {
+    const existingItem = this.state.cartList.find((item) => item.code === code);
+    let updatedCartList;
+    if (!existingItem) {
+      const newItem = this.state.list.find((item) => item.code === code);
+      updatedCartList = [...this.state.cartList, { ...newItem, count: newItem.count + 1 }];
+    } else {
+      updatedCartList = this.state.cartList.map((item) =>
+        item.code === code ? { ...item, count: item.count + 1 } : item,
+      );
+    }
     this.setState({
       ...this.state,
-      list: this.state.list.map((item) =>
-        item.code === code ? { ...item, count: item.count + 1 } : item,
-      ),
+      cartList: updatedCartList,
+      totalAmount: updatedCartList.reduce((acc, item) => acc + item.price * (item.count ?? 0), 0),
+      countOfUniqueProducts: updatedCartList.reduce((acc, item) => acc + !!item.count, 0),
     });
   }
 }

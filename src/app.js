@@ -15,12 +15,12 @@ import CartItem from './components/cartItem';
  */
 function App({ store }) {
   const list = store.getState().list;
+  const totalAmount = store.getState().totalAmount;
+  const countOfUniqueProducts = store.getState().countOfUniqueProducts;
+  const cartList = store.getState().cartList;
+
   const [modal, setModal] = useState(false);
-  const count = useMemo(() => list.reduce((acc, item) => acc + !!item.count, 0), [list]);
-  const amount = useMemo(
-    () => list.reduce((acc, item) => acc + item.price * (item.count ?? 0), 0),
-    [list],
-  );
+
   const callbacks = {
     onDeleteItem: useCallback(
       (code) => {
@@ -40,41 +40,44 @@ function App({ store }) {
       },
       [store],
     ),
-    addItem: useCallback(() => {}, []),
 
     removeItem: useCallback((code) => store.deleteItem(code), [store]),
   };
-
-  const cartItems = useMemo(() => list.filter((item) => item.count), [list]);
 
   const renders = {
     renderCatalogItem: useCallback(
       (item) => (
         <Item item={item} addItem={callbacks.addItem} increaseCount={callbacks.increaseCount} />
       ),
-      [callbacks.addItem, callbacks.increaseCount],
+      [callbacks.increaseCount],
     ),
     renderCartItem: useCallback(
       (item) => <CartItem item={item} deleteItem={callbacks.removeItem} />,
-      [callbacks.addItem, callbacks.increaseCount],
+      [callbacks.increaseCount],
     ),
   };
 
   return (
-    <PageLayout>
+    <>
       <Modal visible={modal} setVisible={setModal}>
         <Cart
           renderItem={renders.renderCartItem}
           visible={modal}
           setVisible={setModal}
-          products={cartItems}
-          totalAmount={amount}
+          products={cartList}
+          totalAmount={totalAmount}
         />
       </Modal>
-      <Head title='Приложение на чистом JS' />
-      <Controls setVisible={setModal} increaseCount={count} totalAmount={amount} />
-      <List list={list} renderItem={renders.renderCatalogItem} />
-    </PageLayout>
+      <PageLayout>
+        <Head title='Приложение на чистом JS' />
+        <Controls
+          setVisible={setModal}
+          increaseCount={countOfUniqueProducts}
+          totalAmount={totalAmount}
+        />
+        <List list={list} renderItem={renders.renderCatalogItem} />
+      </PageLayout>
+    </>
   );
 }
 export default App;
